@@ -52,6 +52,34 @@ const [showLeadForm, setShowLeadForm] = useState(false);
 const [showResults, setShowResults] = useState(false);
 const [name, setName] = useState("");
 const [email, setEmail] = useState("");
+const saveLead = async () => {
+ 
+
+  const score = calculateScore();
+  const biologicalAge = 100 - score + 25;
+
+  const formData = new FormData();
+
+  formData.append("name", name);
+  formData.append("email", email);
+  formData.append("score", score);
+  formData.append("biologicalAge", biologicalAge);
+
+  try {const response = await fetch(
+  "https://script.google.com/macros/s/AKfycbzxZLRs5RpdyDwmpKPkvxlgPEv1DIOZ6gpOVKqBgtWN0eCJmRp-LzEjxaIL5Au5FLEWsw/exec",
+  {
+    method: "POST",
+    body: formData,
+  }
+);
+
+
+
+    console.log("Lead Saved");
+  } catch (error) {
+    console.error(error);
+  }
+};
 const handleAnswer = (answer) => {
   const updatedAnswers = [...answers, answer];
   setAnswers(updatedAnswers);
@@ -286,7 +314,8 @@ if (showLeadForm) {
 
         <button
   className="w-full p-4 bg-emerald-500 rounded-xl text-lg font-semibold hover:scale-105 transition"
-  onClick={() => {
+ onClick={async () => {
+
 
   if (!name.trim()) {
     alert("Please enter your name");
@@ -322,6 +351,11 @@ if (showLeadForm) {
     JSON.stringify(existingLeads)
   );
 
+try {
+  await saveLead();
+} catch (error) {
+  console.log(error);
+}
   setShowLeadForm(false);
   setShowResults(true);
 }}
