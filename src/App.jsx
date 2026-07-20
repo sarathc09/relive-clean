@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Activity, Brain, Heart, Moon } from "lucide-react";
 import { useState } from "react";
+import BiologicalAgeClock from "./components/BiologicalAgeClock";
 
 const questions = [
 {
@@ -210,20 +211,26 @@ if (showResults) {
           Personalized health insights based on your assessment.
         </p>
 
-        <div className="text-center mb-8">
-          <div className="text-7xl font-bold text-emerald-400">
-            {score}
-          </div>
+        <div className="flex flex-col items-center mb-10">
 
-          <div className="text-2xl">
-            Longevity Score
-          </div>
+<BiologicalAgeClock
+  biologicalAge={biologicalAge}
+  chronologicalAge={35}
+/>
 
-          <div className="text-gray-400 mt-2">
-            Biological Age: {biologicalAge}
-          </div>
-        </div>
+<div className="mt-6 text-center">
 
+  <div className="text-6xl font-bold text-emerald-400">
+    {score}
+  </div>
+
+  <div className="text-xl text-gray-300">
+    Longevity Score
+  </div>
+
+</div>
+
+</div>
         <div className="grid md:grid-cols-2 gap-6">
 
           <div className="bg-emerald-500/10 rounded-2xl p-6">
