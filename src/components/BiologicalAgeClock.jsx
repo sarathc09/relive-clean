@@ -25,6 +25,13 @@ export default function BiologicalAgeClock({
           className="w-full h-full -rotate-90"
           viewBox="0 0 220 220"
         >
+            <defs>
+  <linearGradient id="ageGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stopColor="#22c55e" />
+    <stop offset="50%" stopColor="#10b981" />
+    <stop offset="100%" stopColor="#06b6d4" />
+  </linearGradient>
+</defs>
           <circle
             cx="110"
             cy="110"
@@ -38,7 +45,7 @@ export default function BiologicalAgeClock({
             cx="110"
             cy="110"
             r={radius}
-            stroke="#10b981"
+           stroke="url(#ageGradient)"
             strokeWidth="12"
             fill="transparent"
             strokeLinecap="round"
@@ -58,22 +65,54 @@ export default function BiologicalAgeClock({
           <div className="text-gray-400">
             Biological Age
           </div>
+          <div
+  className={`mt-3 px-4 py-1 rounded-full text-sm font-semibold ${
+    biologicalAge <= chronologicalAge
+      ? "bg-green-500/20 text-green-400"
+      : biologicalAge - chronologicalAge <= 5
+      ? "bg-yellow-500/20 text-yellow-400"
+      : "bg-red-500/20 text-red-400"
+  }`}
+>
+  {biologicalAge <= chronologicalAge
+    ? "🟢 Aging Slower"
+    : biologicalAge - chronologicalAge <= 5
+    ? "🟡 On Track"
+    : "🔴 Aging Faster"}
+</div>
 
         </div>
 
       </div>
 
-      <div className="mt-6 text-center">
+      <div className="mt-8 w-full grid grid-cols-3 gap-4 text-center">
 
-        <div className="text-gray-400">
-          Actual Age
-        </div>
+<div>
+  <p className="text-gray-400 text-sm">Actual Age</p>
+  <p className="text-2xl font-bold">
+    {chronologicalAge}
+  </p>
+</div>
 
-        <div className="text-2xl font-bold">
-          {chronologicalAge}
-        </div>
+<div>
+  <p className="text-gray-400 text-sm">Difference</p>
+  <p className="text-2xl font-bold">
+    {biologicalAge - chronologicalAge > 0
+      ? `+${biologicalAge - chronologicalAge}`
+      : biologicalAge - chronologicalAge}
+  </p>
+</div>
 
-      </div>
+<div>
+  <p className="text-gray-400 text-sm">Status</p>
+  <p className="text-lg font-semibold">
+    {biologicalAge <= chronologicalAge
+      ? "Healthy"
+      : "Needs Work"}
+  </p>
+</div>
+
+</div>
 
     </div>
   );

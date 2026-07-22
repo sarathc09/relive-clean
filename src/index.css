@@ -13,3 +13,23 @@ body,
 body {
   font-family: Inter, sans-serif;
 }
+@media print {
+
+  body * {
+    visibility: hidden;
+  }
+
+  #pdf-report,
+  #pdf-report * {
+    visibility: visible;
+  }
+
+  #pdf-report {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    display: block !important;
+  }
+
+}

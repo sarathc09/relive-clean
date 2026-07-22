@@ -2,7 +2,12 @@ import { motion } from "framer-motion";
 import { ArrowRight, Activity, Brain, Heart, Moon } from "lucide-react";
 import { useState } from "react";
 import BiologicalAgeClock from "./components/BiologicalAgeClock";
-
+import { calculateHealthDomains } from "./utils/healthDomains";
+import { generateRecommendations } from "./utils/recommendationEngine";
+import HealthDashboard from "./components/HealthDashboard";
+import { generateSummary } from "./utils/summaryEngine";
+import AISummaryCard from "./components/AISummaryCard";
+import ResultsPage from "./pages/ResultsPage";
 const questions = [
 {
 question: "How many hours do you sleep?",
@@ -53,11 +58,34 @@ const [showLeadForm, setShowLeadForm] = useState(false);
 const [showResults, setShowResults] = useState(false);
 const [name, setName] = useState("");
 const [email, setEmail] = useState("");
+const [dateOfBirth, setDateOfBirth] = useState("");
+const calculateChronologicalAge = (dob) => {
+  if (!dob) return 0;
+
+  const birthDate = new Date(dob);
+  const today = new Date();
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+
+  const hasHadBirthdayThisYear =
+    today.getMonth() > birthDate.getMonth() ||
+    (today.getMonth() === birthDate.getMonth() &&
+      today.getDate() >= birthDate.getDate());
+
+  if (!hasHadBirthdayThisYear) {
+    age--;
+  }
+
+  return age;
+};
 const saveLead = async () => {
  
 
   const score = calculateScore();
   const biologicalAge = 100 - score + 25;
+ 
+  
+  const chronologicalAge = calculateChronologicalAge(dateOfBirth);
 
   const formData = new FormData();
 
@@ -188,103 +216,87 @@ const getStrengths = () => {
     ? strengths
     : ["Improvement Potential"];
 };
+const calculateBiologicalAge = (chronologicalAge, answers) => {
+  let adjustment = 0;
 
+  // Sleep
+  if (answers[0] === "7-8") adjustment -= 2;
+  else if (answers[0] === "<5") adjustment += 3;
+
+  // Exercise
+  if (answers[1] === "5+") adjustment -= 2;
+  else if (answers[1] === "0") adjustment += 3;
+
+  // Stress
+  if (answers[2] === "Low") adjustment -= 1;
+  else if (answers[2] === "High") adjustment += 2;
+
+  // Smoking
+  if (answers[6] === "Yes") adjustment += 6;
+  else adjustment -= 1;
+
+  // Alcohol
+  if (answers[7] === "Frequently") adjustment += 2;
+  else if (answers[7] === "Never") adjustment -= 1;
+
+  // Daily Steps
+  if (answers[8] === "10000+") adjustment -= 2;
+  else if (answers[8] === "<3000") adjustment += 2;
+
+  // Strength Training
+  if (answers[9] === "5+") adjustment -= 2;
+  else if (answers[9] === "Never") adjustment += 2;
+
+  // Keep the result realistic
+  const biologicalAge = chronologicalAge + adjustment;
+
+  return Math.max(18, biologicalAge);
+};
 if (showResults) {
 
   const score = calculateScore();
   const recommendations = getRecommendations();
   const strengths = getStrengths();
   const risks = getRisks();
-
-  const biologicalAge = 100 - score + 25;
-
-  return (
-    <div className="min-h-screen bg-[#050816] text-white flex items-center justify-center px-6">
-
-      <div className="max-w-3xl w-full bg-white/5 border border-white/10 rounded-3xl p-10">
-
-        <h1 className="text-5xl font-bold text-center mb-4">
-          {name}'s Longevity Report
-        </h1>
-
-        <p className="text-center text-gray-400 mb-8">
-          Personalized health insights based on your assessment.
-        </p>
-
-        <div className="flex flex-col items-center mb-10">
-
-<BiologicalAgeClock
-  biologicalAge={biologicalAge}
-  chronologicalAge={35}
-/>
-
-<div className="mt-6 text-center">
-
-  <div className="text-6xl font-bold text-emerald-400">
-    {score}
-  </div>
-
-  <div className="text-xl text-gray-300">
-    Longevity Score
-  </div>
-
-</div>
-
-</div>
-        <div className="grid md:grid-cols-2 gap-6">
-
-          <div className="bg-emerald-500/10 rounded-2xl p-6">
-            <h2 className="text-xl font-bold mb-4">
-              Strengths
-            </h2>
-
-            {strengths.map((item, index) => (
-              <p key={index}>✓ {item}</p>
-            ))}
-          </div>
-
-          <div className="bg-red-500/10 rounded-2xl p-6">
-            <h2 className="text-xl font-bold mb-4">
-              Risks
-            </h2>
-
-            {risks.map((item, index) => (
-              <p key={index}>⚠ {item}</p>
-            ))}
-          </div>
-
-        </div>
-
-        <div className="mt-8 bg-white/5 rounded-2xl p-6">
-
-          <h2 className="text-xl font-bold mb-4">
-            Recommended Actions
-          </h2>
-
-          {recommendations.map((item, index) => (
-            <p key={index}>✓ {item}</p>
-          ))}
-
-<div className="mt-8 flex justify-center">
-  <a
-    href="https://relive.dayschedule.com/longevity-consultation"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <button
-      className="px-8 py-3 bg-emerald-500 rounded-xl text-lg font-semibold hover:scale-105 transition"
-    >
-      Claim Your Free Strategy Call →
-    </button>
-  </a>
-
-</div>
-        </div>
-
-      </div>
-
-    </div>
+  const chronologicalAge = calculateChronologicalAge(dateOfBirth);
+  const biologicalAge = calculateBiologicalAge(
+    chronologicalAge,
+    answers
   );
+  const healthDomains = calculateHealthDomains(answers);
+  const recommendationData =
+    generateRecommendations(
+        answers,
+        healthDomains,
+        {
+            value: biologicalAge,
+            chronologicalAge
+        }
+    );
+    const summaryData = generateSummary({
+      overallScore: score,
+      biologicalAge,
+      chronologicalAge,
+      healthDomains,
+      recommendationData,
+    });
+    
+  
+
+    return (
+      <ResultsPage
+        name={name}
+        score={score}
+        biologicalAge={biologicalAge}
+        chronologicalAge={chronologicalAge}
+        healthDomains={healthDomains}
+        summaryData={summaryData}
+        recommendationData={recommendationData}
+        recommendations={recommendations}
+        strengths={strengths}
+        risks={risks}
+      />
+    );
 }
 
 
@@ -318,7 +330,12 @@ if (showLeadForm) {
           onChange={(e) => setEmail(e.target.value)}
           className="w-full p-4 rounded-xl bg-black/30 border border-white/10 mb-6"
         />
-
+ <input
+  type="date"
+  value={dateOfBirth}
+  onChange={(e) => setDateOfBirth(e.target.value)}
+  className="w-full p-4 rounded-xl bg-black/30 border border-white/10 mb-6"
+ />
         <button
   className="w-full p-4 bg-emerald-500 rounded-xl text-lg font-semibold hover:scale-105 transition"
  onClick={async () => {
@@ -331,6 +348,10 @@ if (showLeadForm) {
 
   if (!email.trim()) {
     alert("Please enter your email");
+    return;
+  }
+  if (!dateOfBirth) {
+    alert("Please select your Date of Birth");
     return;
   }
 
