@@ -1,3 +1,40 @@
+const DOMAIN_INSIGHTS = {
+  heart: {
+    excellent: "Your cardiovascular health is a major strength.",
+    good: "Your heart health is good but has room for optimisation.",
+    needsAttention: "Improving cardiovascular health should be a high priority.",
+  },
+
+  brain: {
+    excellent: "Your cognitive health appears well supported.",
+    good: "Small lifestyle improvements may further support brain health.",
+    needsAttention: "Focus on sleep, stress management, and exercise to support brain health.",
+  },
+
+  sleep: {
+    excellent: "Your sleep habits are supporting healthy recovery.",
+    good: "Improving sleep quality could further enhance recovery.",
+    needsAttention: "Sleep should be your immediate focus for better overall health.",
+  },
+
+  metabolism: {
+    excellent: "Your metabolic health appears well balanced.",
+    good: "Diet and activity improvements could strengthen metabolic health.",
+    needsAttention: "Improving metabolic health is likely to have a significant positive impact.",
+  },
+
+  fitness: {
+    excellent: "Your fitness is one of your strongest longevity assets.",
+    good: "Increasing activity levels can further improve fitness.",
+    needsAttention: "Building regular exercise habits should be a top priority.",
+  },
+
+  recovery: {
+    excellent: "Your recovery capacity supports long-term resilience.",
+    good: "Recovery practices could be improved further.",
+    needsAttention: "Prioritising recovery will improve long-term performance and wellbeing.",
+  },
+};
 const STATUS_STYLES = {
   excellent: {
     label: "Excellent",
@@ -22,12 +59,17 @@ function getStatus(score) {
   return STATUS_STYLES.needsAttention;
 }
 
-export default function HealthDomainCard({ title, score, icon }) {
+export default function HealthDomainCard({
+  domain,
+  title,
+  score,
+  icon,
+}) {
   const status = getStatus(score);
   const clampedScore = Math.min(100, Math.max(0, score));
 
   return (
-    <article className="group relative flex min-h-[240px] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.02] p-6 shadow-[0_12px_40px_rgba(0,0,0,0.22)] backdrop-blur-md transition-all duration-300 ease-out hover:border-white/[0.14] hover:from-white/[0.09] hover:to-white/[0.04] hover:shadow-[0_16px_48px_rgba(0,0,0,0.28)] sm:min-h-[260px] sm:p-8">
+    <article className="group relative flex min-h-[280px] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.02] p-6 shadow-[0_12px_40px_rgba(0,0,0,0.22)] backdrop-blur-md transition-all duration-300 ease-out hover:border-white/[0.14] hover:from-white/[0.09] hover:to-white/[0.04] hover:shadow-[0_16px_48px_rgba(0,0,0,0.28)] sm:min-h-[260px] sm:p-8">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.06] via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
@@ -60,6 +102,23 @@ export default function HealthDomainCard({ title, score, icon }) {
             style={{ width: `${clampedScore}%` }}
           />
         </div>
+        <div className="mt-5 rounded-xl border border-white/10 bg-white/[0.03] p-4">
+
+  <div className="text-xs font-semibold uppercase tracking-wide text-emerald-400">
+    AI Insight
+  </div>
+
+  <p className="mt-2 text-sm leading-6 text-gray-300">
+    {DOMAIN_INSIGHTS[domain]?.[
+      status.label === "Excellent"
+        ? "excellent"
+        : status.label === "Good"
+        ? "good"
+        : "needsAttention"
+    ]}
+  </p>
+
+</div>
       </div>
     </article>
   );

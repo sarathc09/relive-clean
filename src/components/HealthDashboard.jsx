@@ -21,8 +21,7 @@ export default function HealthDashboard({ healthDomains }) {
   return (
     <section className="w-full">
       <header className="mb-8 text-center sm:text-left">
-        <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
-          Health Domains
+      <h2 className="text-2xl font-bold tracking-tight text-white">
         </h2>
         <p className="mt-2 text-sm text-white/50 sm:text-base">
           See how each lifestyle area contributes to your overall longevity.
@@ -32,11 +31,12 @@ export default function HealthDashboard({ healthDomains }) {
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
         {DOMAINS.map(({ key, title, Icon }) => (
           <HealthDomainCard
-            key={key}
-            title={title}
-            score={healthDomains[key]}
-            icon={<Icon className="h-6 w-6" strokeWidth={1.75} />}
-          />
+          key={key}
+          domain={key}
+          title={title}
+          score={healthDomains[key]}
+          icon={<Icon className="h-6 w-6" strokeWidth={1.75} />}
+        />
         ))}
       </div>
     </section>

@@ -22,6 +22,7 @@
 /**
  * Returns a simple health risk category based on the longevity score.
  */
+
 function calculateRiskLevel(score = 0) {
     if (score >= 90) return "Low";
     if (score >= 75) return "Moderate";
@@ -46,9 +47,13 @@ function calculateRiskLevel(score = 0) {
     );
   
     return {
-      version: "1.0.0",
-  
-      generatedAt: new Date().toISOString(),
+      report: {
+        title: "ReLive Evidence-Driven Longevity Report",
+        version: "RC1",
+        generatedAt: new Date().toISOString(),
+        reportType: "Assessment-Based Longevity Report"
+      },
+     
   
       metadata: {
         reportType: "Longevity Assessment",
@@ -60,11 +65,20 @@ function calculateRiskLevel(score = 0) {
       },
   
       assessment: {
-        overallScore,
-        biologicalAge,
+        Longevity Health Score,
+        Estimated Biological Age,
         chronologicalAge,
         ageDifference,
         riskLevel: calculateRiskLevel(overallScore),
+        confidence: {
+          level: "Moderate",
+          basis: "Questionnaire-based assessment"
+        }
+        disclaimer: {
+          title: "Important Notice",
+          text:
+            "This report provides evidence-informed wellness guidance based on your questionnaire responses. It is not a medical diagnosis and should not replace professional medical advice."
+        }
       },
   
       summary: {

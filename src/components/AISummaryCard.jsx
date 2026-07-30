@@ -2,13 +2,13 @@ export default function AISummaryCard({ summary }) {
     if (!summary) return null;
   
     return (
-        <div className="mt-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md p-6">
+        <div className="w-full mt-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md p-6">
       
           <div className="flex items-center gap-3 mb-6">
             <div className="text-3xl">🧠</div>
       
             <div>
-              <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-2xl font-bold tracking-tight text-white">
                 AI Longevity Summary
               </h2>
       
@@ -58,51 +58,11 @@ export default function AISummaryCard({ summary }) {
       
           </div>
       
-          <div className="mb-6">
+          
       
-            <h3 className="text-lg font-semibold text-white mb-4">
-              🎯 Top Priorities
-            </h3>
+            
       
-            <div className="space-y-3">
-      
-              {summary.opportunities?.slice(1).map((item, index) => (
-      
-                <div
-                  key={index}
-                  className="rounded-xl bg-white/5 px-4 py-3"
-                >
-                  ✓ {item}
-                </div>
-      
-              ))}
-      
-            </div>
-      
-          </div>
-      
-          <div>
-      
-            <h3 className="text-lg font-semibold text-white mb-4">
-              📅 Next 30 Days
-            </h3>
-      
-            <div className="space-y-3">
-      
-              {summary.nextSteps?.map((step, index) => (
-      
-                <div
-                  key={index}
-                  className="rounded-xl border border-cyan-500/20 bg-cyan-500/10 px-4 py-3"
-                >
-                  → {step}
-                </div>
-      
-              ))}
-      
-            </div>
-      
-          </div>
+          
       
         </div>
       );

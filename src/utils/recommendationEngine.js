@@ -11,6 +11,8 @@
 // ---------------------------------------------------------------------------
 
 /** Quiz answer indices — keep in sync with questions in App.jsx */
+import { rankInterventions } from "../core/reasoning/reasoningEngine";
+import { getRecommendationById } from "../evidence/evidenceEngine";
 export const ANSWER_INDEX = {
   SLEEP: 0,
   EXERCISE: 1,
@@ -153,6 +155,8 @@ function createRecommendation({
 }) {
   recommendationCounter += 1;
 
+  const evidence = getRecommendationById(id?.replace("rec-", "").replace("domain-", ""));
+
   return {
     id: id ?? `rec-${recommendationCounter}`,
     category,
@@ -161,6 +165,13 @@ function createRecommendation({
     impact,
     priority,
     icon,
+  
+    evidence: evidence?.evidence ?? null,
+    safety: evidence?.safety ?? null,
+    mechanisms: evidence?.mechanisms ?? [],
+    references: evidence?.references ?? [],
+    expectedImpact: evidence?.expectedImpact ?? null,
+    whyItWorks: evidence?.whyItWorks ?? null
   };
 }
 
@@ -829,6 +840,9 @@ function runExtensionRules(context) {
  *   warnings: string[]
  * }}
  */
+export function getTopInterventions(domain, limit = 3) {
+  return rankInterventions(domain).slice(0, limit);
+}
 export function generateRecommendations(
   answers,
   healthDomains,
@@ -847,6 +861,7 @@ export function generateRecommendations(
     biomarkers: extensions.biomarkers ?? {},
     wearableData: extensions.wearableData ?? {},
   };
+
 
   // --- Collect all recommendation sources ---
   const domainRecs = buildDomainRecommendations(domains);

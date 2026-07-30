@@ -145,28 +145,41 @@ function getStrongestDomain(healthDomains = {}) {
   /**
    * Builds three practical next steps.
    */
+  
   function buildNextSteps(weakestDomain, priorities) {
     const steps = [];
   
+    // Week 1
     if (weakestDomain) {
       steps.push(
-        `Focus first on improving ${formatLabel(
+        `Week 1: Focus on improving ${formatLabel(
           weakestDomain[0]
-        )} through consistent, sustainable habits.`
+        )} by following your highest-priority recommendation consistently.`
       );
     }
   
-    priorities.forEach((priority) => {
-      if (steps.length < 3) {
-        steps.push(`Begin implementing recommendations related to ${priority}.`);
-      }
-    });
-  
-    while (steps.length < 3) {
+    // Week 2
+    if (priorities.length > 0) {
       steps.push(
-        "Review your progress regularly and make gradual lifestyle improvements."
+        `Week 2: Build a sustainable routine around ${priorities[0].toLowerCase()} and track your progress every day.`
       );
     }
+  
+    // Week 3
+    if (priorities.length > 1) {
+      steps.push(
+        `Week 3: Introduce ${priorities[1].toLowerCase()} while maintaining the habits established during the previous weeks.`
+      );
+    } else {
+      steps.push(
+        "Week 3: Continue strengthening your healthy habits and gradually increase consistency."
+      );
+    }
+  
+    // Week 4
+    steps.push(
+      "Week 4: Review your progress, celebrate improvements and prepare for the next 30-day health optimisation cycle."
+    );
   
     return steps;
   }
@@ -184,6 +197,7 @@ function getStrongestDomain(healthDomains = {}) {
     const strongest = getStrongestDomain(healthDomains);
     const weakest = getWeakestDomain(healthDomains);
     const priorities = getTopPriorities(recommendationData);
+    const ageDifference = chronologicalAge - biologicalAge;
   
     const strengths = [];
   
@@ -219,33 +233,74 @@ function getStrongestDomain(healthDomains = {}) {
     priorities.forEach((priority) =>
       opportunities.push(`Prioritize improvements related to ${priority}.`)
     );
+  const executiveSummary = `
+Your Longevity Score is ${overallScore}/100, indicating a ${
+  overallScore >= 90
+    ? "excellent"
+    : overallScore >= 80
+    ? "strong"
+    : overallScore >= 70
+    ? "good"
+    : overallScore >= 60
+    ? "developing"
+    : "foundational"
+} overall health profile. Your estimated biological age is ${biologicalAge} years, approximately ${Math.abs(
+  ageDifference
+)} years ${ageDifference >= 0 ? "younger" : "older"} than your chronological age. ${
+  strongest
+    ? `${formatLabel(strongest[0])} is currently your strongest health domain`
+    : "Your assessment highlights positive health patterns"
+}, while ${
+  weakest
+    ? `${formatLabel(weakest[0])} offers the greatest opportunity for improvement`
+    : "maintaining consistency will further improve long-term health"
+}.
+`.replace(/\n\s+/g, " ").trim();
+    const summary = `
+Your assessment indicates an overall Longevity Score of ${overallScore}/100.
+
+${buildAgeComparison(biologicalAge, chronologicalAge)}
+
+${
+  strongest
+    ? `Your strongest health domain is ${formatLabel(
+        strongest[0]
+      )}, suggesting that your current lifestyle habits are supporting this area well.`
+    : ""
+}
+
+${
+  weakest
+    ? `${formatLabel(
+        weakest[0]
+      )} represents your greatest opportunity for improvement. Focusing on this domain is expected to provide the largest positive impact on your long-term health and longevity.`
+    : ""
+}
+
+${
+  priorities.length
+    ? `Based on your assessment, the highest-priority interventions are ${priorities.join(
+        ", "
+      )}.`
+    : ""
+}
+
+These recommendations are based on current evidence from preventive medicine and longevity research. They are intended to support informed lifestyle decisions and should not replace personalised medical advice from a qualified healthcare professional.
+`
+.replace(/\n\s+/g, " ")
+.trim();
   
-    const summary = [
-      `Your overall longevity score is ${overallScore}/100.`,
-      buildAgeComparison(biologicalAge, chronologicalAge),
-      strongest
-        ? `${formatLabel(
-            strongest[0]
-          )} stands out as your strongest area.`
-        : "",
-      weakest
-        ? `${formatLabel(
-            weakest[0]
-          )} may benefit most from additional attention.`
-        : "",
-      priorities.length
-        ? `Your highest priorities are ${priorities.join(", ")}.`
-        : "",
-      "These insights are intended to support informed lifestyle decisions and should not be considered a medical diagnosis.",
-    ]
-      .filter(Boolean)
-      .join(" ");
-  
-    return {
-      title: buildTitle(overallScore),
-      summary,
-      strengths,
-      opportunities,
-      nextSteps: buildNextSteps(weakest, priorities),
-    };
+return {
+  title: buildTitle(overallScore),
+
+  executiveSummary,
+
+  summary,
+
+  strengths,
+
+  opportunities,
+
+  nextSteps: buildNextSteps(weakest, priorities),
+};
   }
