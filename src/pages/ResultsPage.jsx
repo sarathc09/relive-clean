@@ -100,7 +100,7 @@ export default function ResultsPage({
 />
 
 <MetricCard
-  title="Biological Age"
+  title="Bio Age"
   value={biologicalAge}
   highlight
 />
