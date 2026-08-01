@@ -106,7 +106,7 @@ export default function ResultsPage({
 />
 
 <MetricCard
-  title=" Difference"
+  title=" Diff"
   value={chronologicalAge - biologicalAge}
 />
 
