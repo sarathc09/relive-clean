@@ -15,12 +15,12 @@ export default function EvidenceCard({ intervention }) {
     if (!intervention) return null;
   
     return (
-<div className="rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-slate-800 to-slate-900 p-8 shadow-xl">
+<div className="rounded-2xl md:rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-slate-800 to-slate-900 p-4 md:p-8 shadow-xl">
   
-        <div className="flex justify-between items-start">
+<div className="flex flex-col md:flex-row justify-between items-start gap-4">
   
           <div>
-          <h3 className="text-3xl font-bold tracking-tight text-white">
+          <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white">
               {intervention.title}
             </h3>
   
@@ -37,7 +37,7 @@ export default function EvidenceCard({ intervention }) {
 
 </div>
 
-<p className="mt-3 max-w-4xl text-base leading-7 text-gray-300">
+<p className="mt-3 max-w-4xl ttext-sm md:text-base leading-7 text-gray-300">
 {intervention.description}
 </p>
           </div>
@@ -77,7 +77,7 @@ export default function EvidenceCard({ intervention }) {
         Key Mechanisms
       </div>
 
-      <div className="grid md:grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
 
         {intervention.mechanisms.map((mechanism) => (
           <div
@@ -127,7 +127,7 @@ export default function EvidenceCard({ intervention }) {
   📈 Expected Impact
 </div>
 
-<div className="mt-4 grid grid-cols-2 gap-4">
+<div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
 
   <div className="rounded-xl bg-slate-800 p-4 border border-slate-700">
 
@@ -135,7 +135,7 @@ export default function EvidenceCard({ intervention }) {
       Longevity Score
     </div>
 
-    <div className="mt-2 text-2xl font-bold text-emerald-400">
+    <div className="mt-2 text-xl md:text-2xl font-bold text-emerald-400">
       {intervention.expectedImpact?.longevityScore}
     </div>
 
@@ -171,16 +171,18 @@ export default function EvidenceCard({ intervention }) {
 
 </div>
         <div className="mt-5 border-t border-slate-700 pt-4">
-      <details>
+      <details className="group">
       <div className="inline-flex items-center rounded-full bg-emerald-500/10 px-3 py-1 text-sm font-semibold text-emerald-400">
-          📚 Scientific References
+      <summary className="cursor-pointer list-none inline-flex items-center rounded-full bg-emerald-500/10 px-3 py-1 text-sm font-semibold text-emerald-400">
+    📚 Scientific References
+  </summary>
         </div>
     
         <div className="mt-3 space-y-2">
           {intervention.references?.map((ref, index) => (
             <div
               key={index}
-              className="rounded-lg bg-slate-800 p-3"
+              className="rounded-lg bg-slate-800 p-3 md:p-4"
             >
               <div className="font-semibold">
                 {ref.organisation}

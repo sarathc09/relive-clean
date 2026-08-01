@@ -1,3 +1,12 @@
+
+const domainLabels = {
+  sleep: "Sleep",
+  brain: "Brain Health",
+  heart: "Heart Health",
+  metabolism: "Metabolic Health",
+  fitness: "Physical Fitness",
+  recovery: "Recovery",
+};
 export default function AIHealthCoachCard({
     weakestDomain,
     intervention
@@ -5,18 +14,18 @@ export default function AIHealthCoachCard({
     if (!intervention) return null;
   
     return (
-      <div className=" w-full mb-8 rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-emerald-900/20 via-slate-900 to-slate-950 p-8 shadow-xl">
+      <div className="w-full mb-8 rounded-2xl md:rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-emerald-900/20 via-slate-900 to-slate-950 p-4 md:p-8 shadow-xl">
   
         {/* Header */}
-        <div className="flex items-center gap-4 mb-6">
-          <div className="text-5xl">🧠</div>
+        <div className="flex items-center gap-3 md:gap-4 mb-5 md:mb-6">
+        <div className="text-4xl md:text-5xl">🧠</div>
   
           <div>
-          <h2 className="text-2xl font-bold tracking-tight text-white">
+          <h2 className="text-xl md:text-2xl font-bold tracking-tight text-white">
               AI Health Coach
             </h2>
   
-            <p className="text-gray-400">
+            <p className="text-sm md:text-base text-gray-400">
               Your personalised action plan
             </p>
           </div>
@@ -24,21 +33,21 @@ export default function AIHealthCoachCard({
   
         {/* Main Message */}
   
-        <div className="rounded-2xl bg-white/5 p-6">
+        <div className="rounded-2xl bg-white/5 p-4 md:p-6">
   
           <div className="text-sm uppercase tracking-widest text-emerald-400">
             Primary Focus
           </div>
   
-          <div className="text-4xl font-bold mt-2">
-            {weakestDomain}
+          <div className="text-2xl md:text-4xl font-bold mt-2">
+          {domainLabels[weakestDomain] ?? weakestDomain}
           </div>
   
-          <p className="mt-5 text-lg text-gray-300 leading-8">
+          <p className="mt-4 md:mt-5 text-base md:text-lg text-gray-300 leading-7 md:leading-8">
             Improving{" "}
             <span className="text-emerald-400 font-semibold">
-              {weakestDomain}
-            </span>{" "}
+  {domainLabels[weakestDomain] ?? weakestDomain}
+</span>{" "}
             is expected to provide the greatest positive impact on your overall
             longevity profile.
           </p>
@@ -47,15 +56,15 @@ export default function AIHealthCoachCard({
   
         {/* Recommendation */}
   
-        <div className="grid md:grid-cols-2 gap-5 mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mt-6">
   
-          <div className="rounded-2xl bg-slate-800/60 p-5">
+          <div className="rounded-2xl bg-slate-800/60 p-4 md:p-5">
   
             <div className="text-sm uppercase text-gray-400">
               Today's Action
             </div>
   
-            <div className="text-2xl font-bold mt-2">
+            <div className="text-xl md:text-2xl font-bold mt-2">
               {intervention.title}
             </div>
   
@@ -77,7 +86,7 @@ export default function AIHealthCoachCard({
   
           </div>
   
-          <div className="rounded-2xl bg-slate-800/60 p-5">
+          <div className="rounded-2xl bg-slate-800/60 p-4 md:p-5">
   
             <div className="text-sm uppercase text-gray-400">
               Expected Benefit

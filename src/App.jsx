@@ -5,7 +5,7 @@ import BiologicalAgeClock from "./components/BiologicalAgeClock";
 import { calculateHealthDomains } from "./utils/healthDomains";
 import { generateRecommendations } from "./utils/recommendationEngine";
 import HealthDashboard from "./components/HealthDashboard";
-import { generateSummary } from "./utils/summaryEngine";
+import { generateSummary } from "./utils/summaryEngine.js";
 import AISummaryCard from "./components/AISummaryCard";
 import ResultsPage from "./pages/ResultsPage";
 const questions = [
@@ -441,9 +441,9 @@ if (showQuiz) {
   return (
     <div className="min-h-screen bg-[#050816] text-white overflow-hidden">
 <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-black/20 border-b border-white/10">
-  <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
 
-    <h1 className="text-2xl font-bold text-emerald-400">
+<h1 className="text-xl sm:text-2xl font-bold text-emerald-400">
       ReLive
     </h1>
 
@@ -455,7 +455,7 @@ if (showQuiz) {
 
    <button
   onClick={() => setShowQuiz(true)}
-  className="px-5 py-2 bg-emerald-500 rounded-full"
+ className="px-4 sm:px-5 py-2 text-sm sm:text-base bg-emerald-500 rounded-full"
 >
   Get Started
 </button>
@@ -464,8 +464,7 @@ if (showQuiz) {
 </nav>
 
       {/* Hero */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 pt-32">
-
+      <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-24 md:pt-32">
         <div className="absolute inset-0 overflow-hidden">
 
   <div className="absolute top-20 left-20 w-96 h-96 bg-emerald-500/20 rounded-full blur-[120px] animate-pulse" />
@@ -483,23 +482,23 @@ if (showQuiz) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
           >
-           <h1 className="text-6xl md:text-8xl font-bold mb-6">
+           <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
   Discover How Fast
   <span className="text-emerald-400 block">
     You're Really Aging
   </span>
 </h1>
 
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto px-2">
               Measure your biological age, uncover hidden health risks, and receive a personalized longevity roadmap in under 3 minutes.
             </p>
-<div className="mt-10 max-w-md mx-auto backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-6">
+<div className="mt-8 md:mt-10 max-w-sm md:max-w-md mx-auto backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl p-4 md:p-6">
 
-  <div className="text-7xl font-bold text-emerald-400">
+  <div className="text-5xl sm:text-6xl md:text-5xl md:text-7xl font-bold text-emerald-400">
   78
 </div>
 
-<div className="text-2xl mt-2">
+<div className="text-xl sm:text-2xl mt-2">
   Longevity Score
 </div>
 
@@ -510,7 +509,7 @@ if (showQuiz) {
 </div>
             <button
   onClick={() => setShowQuiz(true)}
-  className="mt-10 px-8 py-4 bg-emerald-500 rounded-full text-lg font-semibold flex items-center gap-2 mx-auto hover:scale-105 transition"
+ className="mt-10 w-full sm:w-auto px-6 sm:px-8 py-4 bg-emerald-500 rounded-full text-base sm:text-lg font-semibold flex items-center justify-center gap-2 mx-auto hover:scale-105 transition"
 >
   Start Assessment
   <ArrowRight />
@@ -522,7 +521,7 @@ if (showQuiz) {
   <div className="max-w-6xl mx-auto text-center">
 
     <p className="text-gray-400 text-lg">
-      Trusted by health-conscious professionals, founders and executives
+      Trusted by Health-conscious Professionals, Founders and Executives
     </p>
 
   </div>
@@ -531,7 +530,7 @@ if (showQuiz) {
       {/* Stats */}
 
       <section id="pricing" className="py-24 px-6">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
 
           <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-8 text-center">
             <h2 className="text-5xl font-bold text-emerald-400">
@@ -586,7 +585,7 @@ if (showQuiz) {
 <div className="inline-block px-4 py-2 bg-emerald-500/20 text-emerald-400 rounded-full mb-4">
   Founder Pricing Available
 </div>
-          <div className="text-7xl font-bold text-emerald-400">
+          <div className="text-5xl md:text-7xl font-bold text-emerald-400">
             ₹9,999
           </div>
 
@@ -688,7 +687,7 @@ if (showQuiz) {
 
         <button
   onClick={() => setShowQuiz(true)}
-  className="mt-10 px-10 py-5 bg-emerald-500 rounded-full text-xl font-bold hover:scale-105 transition"
+  className="mt-8 md:mt-10 w-full sm:w-auto px-8 py-4 bg-emerald-500 rounded-full text-lg font-semibold flex items-center justify-center gap-2 mx-auto hover:scale-105 transition"
 >
   Take Free Assessment
 </button>

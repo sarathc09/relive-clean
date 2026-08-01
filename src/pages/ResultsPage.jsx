@@ -9,6 +9,23 @@ import { getTopInterventionsForDomain } from "../core/reasoning/reasoningEngine"
 import AIHealthCoachCard from "../components/AIHealthCoachCard";
 import { generateActionPlan } from "../utils/actionPlanEngine";
 import ProjectedImprovementCard from "../components/ProjectedImprovementCard";
+function MetricCard({ title, value, highlight = false }) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-4 md:p-7 text-center">
+      <div className="h-10 flex items-center justify-center text-xs uppercase tracking-wide text-gray-400">
+  {title}
+</div>
+
+      <div
+        className={`mt-3 text-3xl font-bold ${
+          highlight ? "text-emerald-400" : "text-white"
+        }`}
+      >
+        {value}
+      </div>
+    </div>
+  );
+}
 export default function ResultsPage({
     name,
     score,
@@ -54,18 +71,18 @@ export default function ResultsPage({
         
       );
     return (
-        <div className="min-h-screen bg-[#050816] text-white flex items-center justify-center px-6">
+<div className="min-h-screen bg-[#050816] text-white px-4 sm:px-6 lg:px-8 py-6 md:py-10">
 
 <div
   id="report-container"
-  className="w-full max-w-6xl mx-auto bg-[#111827] border border-white/10 rounded-3xl p-10 shadow-2xl"
+ className="w-full max-w-6xl mx-auto bg-[#111827] border border-white/10 rounded-2xl md:rounded-3xl p-4 sm:p-6 lg:p-10 shadow-2xl"
 >
   
-          <h1 className="text-5xl font-bold text-center mb-4">
+<h1 className="text-3xl md:text-5xl font-bold text-center mb-4 leading-tight">
             {name}'s Longevity Report
           </h1>
   
-          <p className="text-center text-gray-400 mb-8">
+          <p className="text-center text-sm md:text-base text-gray-400 mb-8">
             Personalized health insights based on your assessment.
           </p>
   
@@ -75,47 +92,29 @@ export default function ResultsPage({
     biologicalAge={biologicalAge}
     chronologicalAge={chronologicalAge}
   />
-  <div className="mt-8 grid grid-cols-4 gap-4 w-full">
+  <div className="mt-8 grid grid-cols-4 gap-2 md:gap-4 w-full">
 
-<div className="rounded-2xl bg-white/5 p-5 text-center">
-  <div className="text-xs uppercase tracking-wider text-gray-400">
-    Actual Age
-  </div>
+  <MetricCard
+  title="Actual Age"
+  value={chronologicalAge}
+/>
 
-  <div className="mt-2 text-3xl font-bold">
-    {chronologicalAge}
-  </div>
-</div>
+<MetricCard
+  title="Biological Age"
+  value={biologicalAge}
+  highlight
+/>
 
-<div className="rounded-2xl bg-white/5 p-5 text-center">
-  <div className="text-xs uppercase tracking-wider text-gray-400">
-    Biological Age
-  </div>
+<MetricCard
+  title=" Difference"
+  value={chronologicalAge - biologicalAge}
+/>
 
-  <div className="mt-2 text-3xl font-bold text-emerald-400">
-    {biologicalAge}
-  </div>
-</div>
-
-<div className="rounded-2xl bg-white/5 p-5 text-center">
-  <div className="text-xs uppercase tracking-wider text-gray-400">
-    Difference
-  </div>
-
-  <div className="mt-2 text-3xl font-bold">
-    {chronologicalAge - biologicalAge}
-  </div>
-</div>
-
-<div className="rounded-2xl bg-emerald-500/10 border border-emerald-500/20 p-5 text-center">
-  <div className="text-xs uppercase tracking-wider text-emerald-300">
-    Longevity Score
-  </div>
-
-  <div className="mt-2 text-3xl font-bold text-emerald-400">
-    {score}
-  </div>
-</div>
+<MetricCard
+  title=" Longivity Score"
+  value={score}
+  highlight
+/>
 
 </div>
   
@@ -174,7 +173,7 @@ export default function ResultsPage({
   
 ))}
 
-<div className="mt-6 rounded-xl bg-blue-900/20 border border-blue-500/30 p-5">
+<div className="mt-6 rounded-xl bg-blue-900/20 border border-blue-500/30 p-3 md:p-5">
   <h3 className="font-semibold text-blue-300">
     Why this recommendation?
   </h3>
@@ -191,7 +190,7 @@ export default function ResultsPage({
 
 <div className="text-center">
 
-  <h2 className="text-3xl font-bold text-white">
+  <h2 className="text-2xl md:text-3xl font-bold text-white">
     Ready to Improve Your Biological Age?
   </h2>
 
@@ -203,7 +202,7 @@ export default function ResultsPage({
 
 </div>
 
-<div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+<div className="mt-8 flex flex-col items-center justify-center gap-2 md:gap-4 sm:flex-row">
 
   <button
     onClick={downloadReport}
@@ -230,7 +229,7 @@ export default function ResultsPage({
   <div className="grid gap-8 md:grid-cols-2">
 
     <div>
-      <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-400">
+      <h3 className="text-sm font-semibold uppercase tracking-normal text-gray-400">
         Medical Disclaimer
       </h3>
 
@@ -243,7 +242,7 @@ export default function ResultsPage({
 
     <div className="text-left md:text-right">
 
-      <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-400">
+      <h3 className="text-sm font-semibold uppercase tracking-normal text-gray-400">
         Report Information
       </h3>
 

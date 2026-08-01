@@ -19,7 +19,7 @@ export default function BiologicalAgeClock({
   return (
     <div className="flex flex-col items-center">
 
-      <div className="relative w-60 h-60">
+<div className="relative w-44 h-44 md:w-60 md:h-60">
 
         <svg
           className="w-full h-full -rotate-90"
@@ -58,15 +58,15 @@ export default function BiologicalAgeClock({
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
 
-          <div className="text-6xl font-bold">
+        <div className="text-4xl md:text-6xl font-bold">
             {biologicalAge}
           </div>
 
-          <div className="text-gray-400">
+          <div className="text-sm md:text-base text-gray-400">
             Biological Age
           </div>
           <div
-  className={`mt-3 px-4 py-1 rounded-full text-sm font-semibold ${
+  className={`mt-2 md:mt-3 px-3 md:px-4 py-1 rounded-full text-xs md:text-sm font-semibold ${
     biologicalAge <= chronologicalAge
       ? "bg-green-500/20 text-green-400"
       : biologicalAge - chronologicalAge <= 5
@@ -85,7 +85,7 @@ export default function BiologicalAgeClock({
 
       </div>
 
-      <div className="mt-8 w-full grid grid-cols-3 gap-4 text-center">
+      <div className="mt-6 md:mt-8 w-full grid grid-cols-3 gap-3 md:gap-4 text-center">
 
 <div>
   <p className="text-gray-400 text-sm">Actual Age</p>

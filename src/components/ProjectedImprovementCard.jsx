@@ -23,23 +23,23 @@ export default function ProjectedImprovementCard({
     ).toFixed(1);
   
     return (
-      <div w-full className="mt-8 rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-emerald-900/20 via-slate-900 to-slate-950 p-8">
+      <div className="mt-8 rounded-2xl md:rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-emerald-900/20 via-slate-900 to-slate-950 p-4 md:p-8">
   
         <div className="flex items-center gap-3 mb-6">
           <span className="text-4xl">📈</span>
   
           <div>
-          <h2 className="text-2xl font-bold tracking-tight text-white">
+          <h2 className="text-xl md:text-2xl font-bold tracking-tight text-white">
               Projected Improvement
             </h2>
   
-            <p className="text-gray-400">
+            <p className="text-sm md:text-base text-gray-400">
               Based on consistent adherence for approximately 90 days
             </p>
           </div>
         </div>
   
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
   
           <div className="rounded-2xl bg-slate-800/60 p-6">
   
@@ -47,35 +47,41 @@ export default function ProjectedImprovementCard({
               Longevity Score
             </div>
   
-            <div className="mt-5 flex items-center justify-between">
+            <div className="mt-5 grid grid-cols-[1fr_auto_1fr] items-center gap-4">
   
-              <div>
-                <div className="text-gray-400 text-sm">
-                  Current
-                </div>
+            <div className="flex flex-col justify-between min-h-[92px]">
+  <div>
+    <div className="text-gray-400 text-sm">
+      Current
+    </div>
+
+    <div className="text-3xl md:text-5xl font-bold">
+      {score}
+    </div>
+  </div>
+
+  <div className="h-6" />
+</div>
   
-                <div className="text-5xl font-bold">
-                  {score}
-                </div>
-              </div>
-  
-              <div className="text-3xl">
+              <div className="flex items-center justify-center text-3xl">
                 →
               </div>
   
-              <div className="text-right">
-                <div className="text-gray-400 text-sm">
-                  Potential
-                </div>
-  
-                <div className="text-5xl font-bold text-emerald-400">
-  {projectedScore}
-</div>
+              <div className="flex flex-col items-end justify-between min-h-[92px]">
+  <div>
+    <div className="text-gray-400 text-sm">
+      Potential
+    </div>
 
-<div className="mt-2 text-sm font-semibold text-emerald-300">
-  +{scoreIncrease} Points
+    <div className="text-3xl md:text-5xl font-bold text-emerald-400">
+      {projectedScore}
+    </div>
+  </div>
+
+  <div className="mt-2 text-sm font-semibold text-emerald-300">
+    +{scoreIncrease} Points
+  </div>
 </div>
-              </div>
   
             </div>
   
@@ -87,35 +93,43 @@ export default function ProjectedImprovementCard({
               Biological Age
             </div>
   
-            <div className="mt-5 flex items-center justify-between">
+            <div className="mt-5 grid grid-cols-[1fr_auto_1fr] items-center gap-4">
   
-              <div>
-                <div className="text-gray-400 text-sm">
-                  Current
-                </div>
+            <div className="flex flex-col justify-between min-h-[92px]">
+  <div>
+    <div className="text-gray-400 text-sm">
+      Current
+    </div>
+
+    <div className="text-3xl md:text-5xl font-bold">
+    {biologicalAge}
+    </div>
+  </div>
+
+  <div className="h-6" />
+</div>
   
-                <div className="text-5xl font-bold">
-                  {biologicalAge}
-                </div>
-              </div>
-  
-              <div className="text-3xl">
+              <div className="flex items-center justify-center text-3xl">
                 →
               </div>
   
-              <div className="text-right">
-                <div className="text-gray-400 text-sm">
-                  Potential
-                </div>
-  
-                <div className="text-5xl font-bold text-emerald-400">
-  {projectedAge}
-</div>
+              <div className="flex flex-col items-end justify-between min-h-[92px]">
 
-<div className="mt-2 text-sm font-semibold text-emerald-300">
-  -{ageReduction} Years
+  <div>
+    <div className="text-gray-400 text-sm">
+      Potential
+    </div>
+
+    <div className="text-3xl md:text-5xl font-bold text-emerald-400">
+      {projectedAge}
+    </div>
+  </div>
+
+  <div className="text-sm font-semibold text-emerald-300">
+    -{ageReduction} Years
+  </div>
+
 </div>
-              </div>
   
             </div>
   
@@ -144,41 +158,47 @@ export default function ProjectedImprovementCard({
 
 </div>
 
-<div className="mt-6 grid grid-cols-3 gap-4">
+<div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
 
-  <div className="rounded-xl bg-slate-800 p-4 text-center">
+<div className="rounded-xl bg-slate-800 p-3 md:p-4 text-center">
 
     <div className="text-sm text-gray-400">
       Week 2
     </div>
 
-    <div className="mt-2 font-semibold">
-      Energy & Recovery
-    </div>
+    <div className="mt-2 font-semibold leading-tight">
+  Energy
+  <br />
+  Recovery
+</div>
 
   </div>
 
-  <div className="rounded-xl bg-slate-800 p-4 text-center">
+  <div className="rounded-xl bg-slate-800 p-3 md:p-4 text-center">
 
     <div className="text-sm text-gray-400">
       Week 6
     </div>
 
-    <div className="mt-2 font-semibold">
-      Fitness Improvements
-    </div>
+    <div className="mt-2 font-semibold leading-tight">
+  Fitness
+  <br />
+  Improvement
+</div>
 
   </div>
 
-  <div className="rounded-xl bg-slate-800 p-4 text-center">
+  <div className="rounded-xl bg-slate-800 p-3 md:p-4 text-center">
 
     <div className="text-sm text-gray-400">
       Month 3
     </div>
 
-    <div className="mt-2 font-semibold">
-      Maximum Expected Benefit
-    </div>
+    <div className="mt-2 font-semibold leading-tight">
+  Maximum
+  <br />
+  Benefit
+</div>
 
   </div>
 
@@ -187,7 +207,7 @@ export default function ProjectedImprovementCard({
 
 <div className="flex justify-center">
 
-<div className="inline-flex rounded-full bg-emerald-500/15 border border-emerald-500/30 px-4 py-2 text-sm font-semibold text-emerald-400">
+<div className="inline-flex max-w-full flex-wrap justify-center rounded-full bg-emerald-500/15 border border-emerald-500/30 px-4 py-2 text-sm font-semibold text-emerald-400">
   Confidence: {Math.round((intervention.evidence?.confidence ?? 0) * 100)}%
 </div>
 
